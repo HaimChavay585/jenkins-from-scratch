@@ -5,8 +5,24 @@ pipeline {
         stage('Stage 1'){
             steps{
                 sh '''
+                    ls -la
                     echo "This is stage 1"
                 '''
+            }
+        }
+
+        stage('stage 2 - with a docker'){
+            agent{
+                docker{
+                    image 'python:3.12-slim'
+                }
+            }
+            steps{
+                sh '''
+                    ls -la
+                    python3 --version
+                '''
+
             }
         }
 //         stage('Build & Test Image') {
@@ -31,6 +47,7 @@ pipeline {
         stage('Stage 3'){
             steps{
                 sh '''
+                    ls -la
                     echo "This is stage 3"
                 '''
             }

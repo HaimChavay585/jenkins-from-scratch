@@ -8,6 +8,7 @@ services:
       - "50000:50000"   # inbound agents, unused for now
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /Users/haimchavay/workspace/my_projects/jenkins-from-scratch:/var/jenkins_home/my-repo
 
 volumes:
   jenkins_home:
