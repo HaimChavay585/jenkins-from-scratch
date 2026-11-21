@@ -30,11 +30,6 @@ pipeline {
                             echo "this is end of the hello-app container"
                         '''
                     }
-
-                    sh '''
-                        echo "this is inside of the agent container"
-                        python3 --version
-                    '''
                 }
             }
         }
