@@ -13,28 +13,24 @@ pipeline {
         stage('stage 2 - with a docker'){
             agent{
                 docker{
-                    image 'python:3.12-slim'
+                    image 'docker:cli'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 0 -e HOME=/tmp'
                 }
             }
             steps{
                 script{
-                    sh '''
-                        echo "inside script"
-                        python app.py
-                    '''
+                    // create a docker image
+                    def image = docker.build("python-hello-app-image:${env.BUILD_NUMBER}")
 
-//                     // create a docker image
-//                     def image = docker.build("python-hello-app-image:${env.BUILD_NUMBER}")
-//
-//                     // create, run and delete the container at the end
-//                     image.inside{
-//                         sh '''
-//                             echo "this is inside the hello-app container"
-//                             python --version
-//                             python app.py
-//                             echo "this is end of the hello-app container"
-//                         '''
-//                     }
+                    // create, run and delete the container at the end
+                    image.inside{
+                        sh '''
+                            echo "this is inside the hello-app container"
+                            python --version
+                            python app.py
+                            echo "this is end of the hello-app container"
+                        '''
+                    }
                 }
             }
         }
