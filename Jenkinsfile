@@ -36,10 +36,10 @@ pipeline {
         }
     }
 
-//     post {
-//         always {
-//             // delete the image(if created)
-//             sh "docker rmi my-python-app:${env.BUILD_NUMBER} || true"
-//         }
-//     }
+    post {
+        always {
+            // delete the image(if created)
+            sh "docker rmi python-hello-app-image:${env.BUILD_NUMBER} || true"
+        }
+    }
 }
