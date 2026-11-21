@@ -13,7 +13,7 @@ pipeline {
         stage('stage 2 - with a docker'){
             agent{
                 docker{
-                    image 'python:3.12-slim'
+                    image 'docker:cli'
                 }
             }
             steps{
