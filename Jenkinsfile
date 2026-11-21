@@ -18,40 +18,26 @@ pipeline {
             }
             steps{
                 script{
-                    // create a docker image
-                    def image = docker.build("python-hello-app-image:${env.BUILD_NUMBER}")
+                    sh '''
+                        echo "inside script"
+                        python app.py
+                    '''
 
-                    // create, run and delete the container at the end
-                    image.inside{
-                        sh '''
-                            echo "this is inside the hello-app container"
-                            python --version
-                            python app.py
-                            echo "this is end of the hello-app container"
-                        '''
-                    }
+//                     // create a docker image
+//                     def image = docker.build("python-hello-app-image:${env.BUILD_NUMBER}")
+//
+//                     // create, run and delete the container at the end
+//                     image.inside{
+//                         sh '''
+//                             echo "this is inside the hello-app container"
+//                             python --version
+//                             python app.py
+//                             echo "this is end of the hello-app container"
+//                         '''
+//                     }
                 }
             }
         }
-//         stage('Build & Test Image') {
-//             steps {
-//                 script {
-//                     // create a docker image
-//                     def myImage = docker.build("my-python-app:${env.BUILD_NUMBER}")
-//
-//                     // create, run and delete the container at the end
-//                     myImage.inside {
-//                         sh '''
-//                             echo "=== Starting container test ==="
-//                             python --version
-//                             python app.py
-//                             echo "=== Container test finished ==="
-//                         '''
-//                     }
-//                 }
-//             }
-//         }
-
     }
 
 //     post {
