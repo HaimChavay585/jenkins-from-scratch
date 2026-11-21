@@ -6,7 +6,10 @@ pipeline {
             steps{
                 sh '''
                     ls -la
-                    echo "This is stage 1"
+                    echo "before touch"
+                    touch stage_1.txt
+                    echo "after touch"
+                    ls -la
                 '''
             }
         }
@@ -21,6 +24,10 @@ pipeline {
                 sh '''
                     ls -la
                     python3 --version
+                    echo "before touch"
+                    touch stage_2.txt
+                    echo "after touch"
+                    ls -la
                 '''
 
             }
@@ -49,6 +56,10 @@ pipeline {
                 sh '''
                     ls -la
                     echo "This is stage 3"
+                    echo "before touch"
+                    touch stage_3.txt
+                    echo "after touch"
+                    ls -la
                 '''
             }
         }
