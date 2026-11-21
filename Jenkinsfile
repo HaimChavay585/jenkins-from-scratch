@@ -6,10 +6,6 @@ pipeline {
             steps{
                 sh '''
                     ls -la
-                    echo "before touch"
-                    touch stage_1.txt
-                    echo "after touch"
-                    ls -la
                 '''
             }
         }
@@ -21,14 +17,26 @@ pipeline {
                 }
             }
             steps{
+                script{
+                    // create a docker image
+                    def image = docker.build("python-hello-app-image:${env.BUILD_NUMBER}")
+
+                    // create, run and delete the container at the end
+                    image.inside{
+                        sh '''
+                            echo "this is inside the hello-app container"
+                            python --version
+                            python app.py
+                            echo "this is end of the hello-app container"
+                        '''
+                }
+
                 sh '''
-                    ls -la
+                    echo "this is inside of the agent container"
                     python3 --version
-                    echo "before touch"
-                    touch stage_2.txt
-                    echo "after touch"
-                    ls -la
                 '''
+            }
+
 
             }
         }
@@ -51,18 +59,6 @@ pipeline {
 //             }
 //         }
 
-        stage('Stage 3'){
-            steps{
-                sh '''
-                    ls -la
-                    echo "This is stage 3"
-                    echo "before touch"
-                    touch stage_3.txt
-                    echo "after touch"
-                    ls -la
-                '''
-            }
-        }
     }
 
 //     post {
