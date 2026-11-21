@@ -29,17 +29,13 @@ pipeline {
                             python app.py
                             echo "this is end of the hello-app container"
                         '''
-                }
+                    }
 
-                script{
                     sh '''
                         echo "this is inside of the agent container"
                         python3 --version
                     '''
                 }
-            }
-
-
             }
         }
 //         stage('Build & Test Image') {
